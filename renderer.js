@@ -1,7 +1,7 @@
-const myNotification = new Notification('Title', {
-    body: 'Notification from the Renderer process'
-})
-
-myNotification.onclick = () => {
-    console.log('Notification clicked')
-}
+const { ipcRenderer } = require('electron');
+// Send request from renderer to main.
+const closeApp = document.getElementById('exit');
+closeApp.addEventListener('click', () => {
+    ipcRenderer.send('close-app')
+});
+R
