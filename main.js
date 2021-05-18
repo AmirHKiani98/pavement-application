@@ -18,7 +18,7 @@ function createWindow() {
         frame: false,
     })
     win.on("minimize", () => app.quit());
-    win.loadFile('index.html')
+    win.loadFile('pages/index.html')
 }
 // How to make request from rendere to main
 ipcMain.on("close-app", () => app.quit())
