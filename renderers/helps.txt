@@ -1,0 +1,2 @@
+Get paramters of a geometry
+geometryName.geometry.parameters -> depth, height, width, heightSegments, widthSegments

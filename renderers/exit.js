@@ -4,4 +4,3 @@ const closeApp = document.getElementById('exit');
 closeApp.addEventListener('click', () => {
     ipcRenderer.send('close-app')
 });
-R

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
     <link rel="stylesheet" href="../css/main.css">
+    <meta name='viewport' content='width=device-width' />
     <!-- <link rel="stylesheet" href="renderers/jquery.js"> -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 </head>
@@ -15,21 +16,57 @@
             <a id="exit">Exit</a>
             <a href="about.html" id="new">About</a>
             <a href="how.html" id="new">How To?</a>
-            <a href="home.html" id="new">Home</a>
+            <a href="index.html" id="new">Home</a>
         </ul>
     </nav>
     <main>
         <div id="right_side">
             <ul>
-                <li>Dowal bar</li>
+
+                <li class="right_side_list dropdown">
+                    <p data-id="2">Change Attributes</p>
+                    <!-- <img src="../images/dropdown.png" alt="" class="dropdown_images"> -->
+                </li>
+                <ul class="drop_down_list" data-id="2">
+                    <li><input type="text" placeholder="New" class="inputs_attributes"></li>
+                    <li><input type="text" placeholder="New" class="inputs_attributes"></li>
+                    <li>hel</li>
+                    <li>hel</li>
+                    <li>hel</li>
+                </ul>
+                <li class="right_side_list dropdown">
+                    <p data-id="1">Stresses</p>
+                    <!-- <img src="../images/dropdown.png" alt="" class="dropdown_images"> -->
+
+                </li>
+                <ul class="drop_down_list" data-id="1">
+                    <li>Maximum Curling</li>
+                    <li>hi</li>
+                    <li>hi</li>
+                    <li>hi</li>
+                </ul>
             </ul>
         </div>
-        <div id="left_side"></div>
+        <div id="left_side">
+            <div id="functions">
+                <ul>
+                    <li id="normal_mode">Hi</li>
+                    <li id="transparent_mode">Hi</li>
+                    <li id="check_stresses">Hi</li>
+                    <li>Hi</li>
+                </ul>
+            </div>
+        </div>
     </main>
     <footer>
         New
     </footer>
-    <script src="../renderers/renderer.js"></script>
+
+    <script src="../renderers/formulas.js"></script>
+    <script src="../renderers/exit.js"></script>
+    <script src="../renderers/test_threed.js" type="module">
+    </script>
+    <script src="../renderers/dropdown.js"></script>
 </body>
 
 </html>
