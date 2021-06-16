@@ -1,3 +1,5 @@
+import * as methodHandler from "./methodsHandler.js";
+
 var allRightList = document.getElementsByClassName("dropdown");
 for (let index = 0; index < allRightList.length; index++) {
     const element = allRightList[index];
@@ -14,24 +16,39 @@ for (let i = 0; i < uls.length; i++) {
 // 
 
 function dropDown(event) {
-    const dataId = event.target.dataset.id
-    const allDropDowns = document.getElementsByClassName("drop_down_list");
-    for (let index = 0; index < allDropDowns.length; index++) {
-        var element = allDropDowns[index];
-        const dropDownDataId = element.dataset.id;
-        if (dropDownDataId == dataId) break;
-    }
-    var height = element.style.height
-    switch (height) {
-        case "0px":
-        case "":
-            element.style.height = "80px";
-            break;
-        case "80px":
-            element.style.height = "0px";
-        default:
-            // console.log("hi");
-            break;
+    // const dataId = event.target.dataset.id
+    // const allDropDowns = document.getElementsByClassName("drop_down_list");
+    // for (let index = 0; index < allDropDowns.length; index++) {
+    //     var element = allDropDowns[index];
+    //     const dropDownDataId = element.dataset.id;
+    //     if (dropDownDataId == dataId) break;
+    // }
+    // var height = element.style.height
+    // switch (height) {
+    //     case "0px":
+    //     case "":
+    //         element.style.height = "80px";
+    //         break;
+    //     case "80px":
+    //         element.style.height = "0px";
+    //     default:
+    //         // console.log("hi");
+    //         break;
+    // }
+    var element = event.target.nextSibling.nextSibling;
+    if (element !== null) {
+        var height = element.style.height
+        switch (height) {
+            case "0px":
+            case "":
+                element.style.height = "100%";
+                break;
+            case "100%":
+                element.style.height = "0px";
+            default:
+                // console.log("hi");
+                break;
+        }
     }
 }
 
@@ -49,10 +66,12 @@ function dropUp(event) {
 function checkInput(event) {
     var innerListInput = event.target.outerText;
     switch (innerListInput) {
-        case "Maximum Curling":
-
+        case "Maximum Interior Curling":
+            methodHandler.maxInteriorCurling();
             break;
-
+        case "Maximum Edge Curling":
+            methodHandler.maxEdgeCurling();
+            break;
         default:
             break;
     }

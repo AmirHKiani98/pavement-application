@@ -10,6 +10,7 @@ var renderer = new THREE.WebGL1Renderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(plan.offsetWidth, plan.offsetHeight);
 var asphaltTemp;
+export { getWidth, getDepth, getLength, makeAsphalt, getProperties }
 // camera.aspect = plan.offsetWidth / plan.offsetHeight;
 // camera.updateProjectionMatrix();
 // renderer.setSize(plan.offsetWidth, plan.offsetHeight)
@@ -30,13 +31,17 @@ camera.lookAt(baseCameraLook)
 
 
 
-const properties = {
-    asphlatLength: 50,
+
+window.mainProperties = {
+    asphlatLength: 300,
     asphaltThickness: 0.1,
-    asphaltWidth: 12
-}
+    asphaltWidth: 144,
+    mainThickness: 8,
+    temparature: 20,
+    thermal_coefficient: 5,
+    k_modules: 200
 
-
+};
 
 const lights = [];
 var allShapes = [];
@@ -61,7 +66,7 @@ scene.add(lights[2]);
 
 function preview() {
     // Make Asphalt
-    makeAsphalt();
+    makeAsphalt(window.mainProperties);
     // console.log(light);
 
     // Tween
@@ -167,7 +172,9 @@ function onMouseClick() {
 
 
 
-function makeAsphalt(ignoreChangeCamera = false) {
+function makeAsphalt(properties, ignoreChangeCamera = false) {
+    window.mainProperties = properties;
+    updateUlList();
     clearCanvas();
     if (!ignoreChangeCamera) {
         changeCameraPosition(firstCameraPosition)
@@ -186,22 +193,24 @@ function makeAsphalt(ignoreChangeCamera = false) {
     allShapes.push(baseCourse)
     allShapes.push(subBaseCourse)
 }
+window.makeAsphalt = makeAsphalt;
 
 function makeMiddleLine(asphaltLength) {
     const gap = Math.min(0.05 * asphaltLength, 0.5)
-    const middleLength = Math.min(0.1 * asphaltLength, 3)
+    const middleLength = Math.max(0.1 * asphaltLength, 3)
     const numberOfMiddles = (asphaltLength) / (middleLength + gap)
+    console.log(getDepth());
     for (let i = 0; i < numberOfMiddles; i++) {
         var checkPoint = (((middleLength - asphaltLength) / 2) + (gap + middleLength) * i) + middleLength / 2;
         if (checkPoint > asphaltLength / 2) {
             var remain = checkPoint - asphaltLength / 2;
             var newLength = middleLength - remain;
-            var middle = makingFullCube(newLength, 0.11, 0.5, 0xFFFFFF, 0xFFFFFF, true);
+            var middle = makingFullCube(newLength, 0.11, getWidth() * 0.05, 0xFFFFFF, 0xFFFFFF, true);
             middle.position.x = (asphaltLength - newLength) / 2;
             allShapes.push(middle)
             continue;
         }
-        var middle = makingFullCube(middleLength, 0.11, 0.5, 0xFFFFFF, 0xFFFFFF, true);
+        var middle = makingFullCube(middleLength, 0.11, getWidth() * 0.05, 0xFFFFFF, 0xFFFFFF, true);
         allShapes.push(middle)
         middle.position.x = ((middleLength - asphaltLength) / 2) + (gap + middleLength) * i;
     }
@@ -225,7 +234,7 @@ function makeSubBase(asphlatWidth, asphaltLength, asphaltDepth, baseCourseWidth)
 function transparentAsphalt() {
     clearCanvas();
     changeCameraPosition({ x: -1 * firstCameraPosition.x, y: firstCameraPosition.y, z: firstCameraPosition.z })
-    var transparentAsphalt = makingEmptyCube(properties.asphlatLength, properties.asphaltThickness * 20, properties.asphaltWidth)
+    var transparentAsphalt = makingEmptyCube(window.mainProperties.asphlatLength, window.mainProperties.asphaltThickness * 20, window.mainProperties.asphaltWidth)
     allShapes.push(transparentAsphalt);
     asphaltTemp = transparentAsphalt;
     addingRebers(6, 0.1, 5);
@@ -243,7 +252,7 @@ function addingRebers(distance, degree, bottomDistance) {
     // var cylinder = makingCylinder(0.1, properties.asphaltWidth, 20, true);
     var i = 0
     while (distance * i + bottomDistance < 1 * asphaltLength) { // equlas to (-1 * asphaltLength + distance < asphaltLength/2)
-        var cylinder = makingCylinder(degree, properties.asphaltWidth, 2, true);
+        var cylinder = makingCylinder(degree, window.mainProperties.asphaltWidth, 2, true);
         cylinder.position.x = -1 * (asphaltLength / 2) + distance * i + bottomDistance;
         allShapes.push(cylinder);
         transverseRebars.push(cylinder);
@@ -392,17 +401,17 @@ function clearCanvas() {
 
 function upSideView() {
     clearCanvas();
-    makeAsphalt(true);
+    makeAsphalt(window.mainProperties, true);
     var theCaclulatedRadian = 0.694738276;
     if (asphaltTemp.geometry !== undefined) {
         var asphaltLength = asphaltTemp.geometry.parameters.width;
     } else {
         var asphaltLength = asphaltTemp.parameters.width;
     }
-    var calcY = ((1.3 * asphaltLength) / 2) / Math.tan(theCaclulatedRadian);
+    var calcY = ((1.6 * asphaltLength) / 2) / Math.tan(theCaclulatedRadian);
     changeCameraPosition({ x: 0, y: calcY, z: 0 });
     control.enableRotate = false;
-    control.enableZoom = false;
+    control.enableZoom = true;
     addLengthText();
     addWidthText();
 }
@@ -424,10 +433,9 @@ function addLengthText() {
     const fontLoader = new THREE.FontLoader();
     var font = new THREE.Font();
     var length = asphaltTemp.geometry.parameters.width;
-
     fontLoader.load("../fonts/gentilis_bold.typeface.json", function(response) {
         font = response;
-        var textGeometry = new THREE.TextGeometry("" + length, {
+        var textGeometry = new THREE.TextGeometry("" + getLength(), {
 
             font: font,
 
@@ -442,7 +450,7 @@ function addLengthText() {
         });
         textGeometry.rotateX(-Math.PI / 2);
         var width = asphaltTemp.geometry.parameters.depth;
-        textGeometry.center().translate(0, 0, -0.7 * width);
+        textGeometry.center().translate(0, 0, -0.5 * getWidth() - 3);
         var textMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000, specular: 0xffffff });
 
         var mesh = new THREE.Mesh(textGeometry, textMaterial);
@@ -474,7 +482,7 @@ function addWidthText() {
         textGeometry.rotateX(-Math.PI / 2);
         textGeometry.rotateY(-Math.PI / 2);
         var length = asphaltTemp.geometry.parameters.width / 2;
-        textGeometry.center().translate(1.1 * length, 0, 0);
+        textGeometry.center().translate(length + 3, 0, 0);
         var textMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000, specular: 0xffffff });
         console.log(asphaltTemp)
 
@@ -483,6 +491,67 @@ function addWidthText() {
         scene.add(mesh);
         allShapes.push(mesh);
     })
+}
+
+function getLength() {
+    if (asphaltTemp.geometry !== undefined) {
+        var asphaltWidth = asphaltTemp.geometry.parameters.width;
+    } else {
+        var asphaltWidth = asphaltTemp.parameters.width;
+    }
+    return (asphaltWidth);
+}
+
+function getDepth() {
+    if (asphaltTemp.geometry !== undefined) {
+        var asphaltDepth = asphaltTemp.geometry.parameters.height;
+    } else {
+        var asphaltDepth = asphaltTemp.parameters.height;
+    }
+    return (asphaltDepth);
+}
+
+function getWidth() {
+    if (asphaltTemp.geometry !== undefined) {
+        var asphaltdepth = asphaltTemp.geometry.parameters.depth;
+    } else {
+        var asphaltdepth = asphaltTemp.parameters.depth;
+    }
+    return (asphaltdepth);
+}
+
+function getProperties() {
+    return (mainProperties);
+}
+
+function updateUlList() {
+    var ul = document.getElementById("attributes_lists");
+
+    ul.innerHTML = "";
+    var length = window.mainProperties.asphlatLength;
+    var width = window.mainProperties.asphaltWidth;
+    var thickness = window.mainProperties.mainThickness;
+    var k_modules = window.mainProperties.k_modules;
+    var temparature = window.mainProperties.temparature;
+    var thermal_coefficient = window.mainProperties.thermal_coefficient;
+    var element = document.createElement("li");
+    element.innerHTML = "Length: " + length + " (in)";
+    ul.appendChild(element)
+    var element = document.createElement("li");
+    element.innerHTML = "Width: " + width + " (in)";
+    ul.appendChild(element)
+    var element = document.createElement("li");
+    element.innerHTML = "Thickness: " + thickness + " (in)";
+    ul.appendChild(element)
+    var element = document.createElement("li");
+    element.innerHTML = "Subgrade<br>Modules: " + k_modules + " (pci)";
+    ul.appendChild(element)
+    var element = document.createElement("li");
+    element.innerHTML = "Temperature<br>Difference: " + temparature + " (F)";
+    ul.appendChild(element)
+    var element = document.createElement("li");
+    element.innerHTML = "Thremal<br>Coefficient: " + thermal_coefficient + "<a href='Hi'> (1/F)</a>";
+    ul.appendChild(element)
 }
 GameLoop();
 // Test

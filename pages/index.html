@@ -21,39 +21,38 @@
     </nav>
     <main>
         <div id="right_side">
-            <ul>
+            <ul id="main_list_container">
 
-                <li class="right_side_list dropdown">
-                    <p data-id="2">Change Attributes</p>
-                    <!-- <img src="../images/dropdown.png" alt="" class="dropdown_images"> -->
+                <li class="right_side_list">
+                    <p class="dropdown" id="properties_button">Change Attributes</p>
                 </li>
-                <ul class="drop_down_list" data-id="2">
-                    <li><input type="text" placeholder="New" class="inputs_attributes"></li>
-                    <li><input type="text" placeholder="New" class="inputs_attributes"></li>
-                    <li>hel</li>
-                    <li>hel</li>
-                    <li>hel</li>
-                </ul>
-                <li class="right_side_list dropdown">
-                    <p data-id="1">Stresses</p>
-                    <!-- <img src="../images/dropdown.png" alt="" class="dropdown_images"> -->
 
+                <li class="right_side_list">
+                    <p data-id="1" class="dropdown">Stresses</p>
+                    <ul class="drop_down_list" data-id="1">
+                        <li>Maximum Interior Curling</li>
+                        <li>Maximum Edge Curling</li>
+                    </ul>
                 </li>
-                <ul class="drop_down_list" data-id="1">
-                    <li>Maximum Curling</li>
-                    <li>hi</li>
-                    <li>hi</li>
-                    <li>hi</li>
-                </ul>
+
             </ul>
+            <div id="result">
+                <p id="show_result">
+
+                </p>
+            </div>
         </div>
         <div id="left_side">
             <div id="functions">
                 <ul>
-                    <li id="normal_mode">Hi</li>
-                    <li id="transparent_mode">Hi</li>
-                    <li id="check_stresses">Hi</li>
-                    <li>Hi</li>
+                    <li id="normal_mode">Normal View</li>
+                    <li id="transparent_mode">Rebar View</li>
+                    <li id="check_stresses">Upside View</li>
+                </ul>
+            </div>
+            <div id="attributes">
+                <ul id="attributes_lists">
+
                 </ul>
             </div>
         </div>
@@ -63,10 +62,11 @@
     </footer>
 
     <script src="../renderers/formulas.js"></script>
-    <script src="../renderers/exit.js"></script>
     <script src="../renderers/test_threed.js" type="module">
     </script>
-    <script src="../renderers/dropdown.js"></script>
+    <script src="../renderers/dropdown.js" type="module"></script>
+    <script src="../renderers/renderer.js"></script>
+    <script src="../renderers/methodsHandler.js" type="module"></script>
 </body>
 
 </html>
