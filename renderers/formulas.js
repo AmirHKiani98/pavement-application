@@ -95,14 +95,15 @@ function get_equal_square_side(a) {
 }
 
 
-function loanides_corner_loading_stress(Pd, c, k, h, E = 4 * (10 ** 6), nu = 0.15) {
+function loanides_corner_loading_stress(Pd, a, k, h, E = 4 * (10 ** 6), nu = 0.15) {
     /*
     P is summation of all loading
     */
-    first_part = (3 * Pd) / (h ** 2)
-    l = relative_stiffness(k, h, E, nu)
-    second_part = (c / l) ** 2
-    return first_part * (1 - second_part)
+    first_part = (3 * Pd) / (h ** 2);
+    l = relative_stiffness(k, h, E, nu);
+    c = 1.772 * a;
+    second_part = (c / l) ** 0.72;
+    return first_part * (1 - second_part);
 }
 
 
@@ -112,11 +113,11 @@ function loanides_corner_loading_deflection(Pd, c, k, h, E = 4 * (10 ** 6), nu =
     first_part = (Pd / (k * (l ** 2)))
 
     second_part = 0.69 * (c / l)
-
     return first_part * (1.205 - second_part)
 }
 
 
+// This is Westergard too!
 function interior_loading_stress(Pd, a, k, h, E = 4 * (10 ** 6), nu = 0.15) {
     to_check = 1.724 * a
 
@@ -137,6 +138,7 @@ function interior_loading_stress(Pd, a, k, h, E = 4 * (10 ** 6), nu = 0.15) {
 // a = a_eq_dual_tires(6000, 80, 14)
 
 // console.log(interior_loading_stress(2*6000, a, 200, 10))
+
 
 function interior_loading_deflection(Pd, a, k, h, E = 4 * (10 ** 6), nu = 0.15) {
     l = relative_stiffness(k, h, E, nu)
@@ -170,15 +172,19 @@ function edge_loading_stress_semicircle(Pd, a, k, h, E = 4 * (10 ** 6), nu = 0.1
 
 
 function edge_loading_deflection_circle(Pd, a, k, h, E = 4 * (10 ** 6), nu = 0.15) {
-    first_part = ((2 + 1.2 * nu * Pd) / (E * (h ** 3) * k)) ** 0.5
+    // first_part = ((2 + 1.2 * nu * Pd) / (E * (h ** 3) * k)) ** 0.5
     l = relative_stiffness(k, h, E, nu)
+    first_part = (0.431 * Pd) / (k * (l ** 2));
+    // first_part = ((2 + 1.2 * nu * Pd) ** 0.5) / ((l ** 2) * k * ((12 - (1 - nu ** 2)) ** 0.5));
     second_part = ((0.74 + 0.4 * nu) * a) / l
     return first_part * (1 - second_part)
 }
 
 function edge_loading_deflection_semicircle(Pd, a, k, h, E = 4 * (10 ** 6), nu = 0.15) {
-    first_part = ((2 + 1.2 * nu * Pd) / (E * (h ** 3) * k)) ** 0.5
+    // first_part = ((2 + 1.2 * nu * Pd) / (E * (h ** 3) * k)) ** 0.5
     l = relative_stiffness(k, h, E, nu)
+    first_part = (0.431 * Pd) / (k * (l ** 2));
+    // first_part = ((2 + 1.2 * nu * Pd) ** 0.5) / ((l ** 2) * k * ((12 - (1 - nu ** 2)) ** 0.5));
     second_part = ((0.323 + 0.17 * nu) * a) / l
     return first_part * (1 - second_part)
 }

@@ -75,6 +75,34 @@ function checkInput(event) {
         case "Westergard corner stress":
             methodHandler.westergardCornerStress();
             break;
+        case "Ioannides corner stress":
+            methodHandler.ioannidesCornerStress();
+            break;
+        case "Westergard corner deflection":
+            methodHandler.westergardCornerDeflection();
+            break;
+        case "Ioannides corner deflection":
+            methodHandler.ioannidesCornerDeflection();
+            break;
+        case "Westergard interior stress":
+            methodHandler.westergardInteriorStress();
+            break;
+        case "Westergard interior deflection":
+            methodHandler.westergardInteriorDeflection();
+            break;
+        case "Westergard edge stress - circle":
+            methodHandler.westergardEdgeStressCircle();
+            break;
+        case "Westergard edge deflection - circle":
+            methodHandler.westergardEdgeDeflectionCircle();
+            break;
+        case "Westergard edge deflection - semicircle":
+            methodHandler.westergardEdgeDeflectionSemiCircle();
+            break;
+        case "Westergard edge stress - semicircle":
+            methodHandler.westergardEdgeStressSemiCircle();
+            break;
+
         default:
             break;
     }

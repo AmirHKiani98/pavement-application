@@ -28,7 +28,7 @@ camera.lookAt(baseCameraLook)
 
 // Properties
 const loadProperties = {
-    load_amount: 20,
+    load_amount: 10000,
     diameter: 6
 }
 
@@ -39,10 +39,10 @@ window.mainProperties = {
     asphlatLength: 300,
     asphaltThickness: 0.1,
     asphaltWidth: 144,
-    mainThickness: 8,
+    mainThickness: 10,
     temparature: 20,
     thermal_coefficient: 5,
-    k_modules: 200
+    k_modules: 100
 
 };
 
