@@ -10,7 +10,7 @@ var renderer = new THREE.WebGL1Renderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(plan.offsetWidth, plan.offsetHeight);
 var asphaltTemp;
-export { getWidth, getDepth, getLength, makeAsphalt, getProperties }
+export { getWidth, getDepth, getLength, makeAsphalt, getProperties, getLoadProperties }
 // camera.aspect = plan.offsetWidth / plan.offsetHeight;
 // camera.updateProjectionMatrix();
 // renderer.setSize(plan.offsetWidth, plan.offsetHeight)
@@ -27,7 +27,10 @@ camera.position.y = firstCameraPosition.y
 camera.lookAt(baseCameraLook)
 
 // Properties
-
+const loadProperties = {
+    load_amount: 20,
+    diameter: 6
+}
 
 
 
@@ -493,6 +496,17 @@ function addWidthText() {
     })
 }
 
+function updateLoadProperties(data) {
+    loadProperties.load_amount = parseFloat(data.load_amount);
+    loadProperties.diameter = parseFloat(data.diameter);
+    console.log(loadProperties);
+}
+window.updateLoadProperties = updateLoadProperties;
+
+function getLoadProperties() {
+    return loadProperties;
+}
+
 function getLength() {
     if (asphaltTemp.geometry !== undefined) {
         var asphaltWidth = asphaltTemp.geometry.parameters.width;
@@ -544,13 +558,13 @@ function updateUlList() {
     element.innerHTML = "Thickness: " + thickness + " (in)";
     ul.appendChild(element)
     var element = document.createElement("li");
-    element.innerHTML = "Subgrade<br>Modules: " + k_modules + " (pci)";
+    element.innerHTML = "Subgrade Modules: " + k_modules + " (pci)";
     ul.appendChild(element)
     var element = document.createElement("li");
-    element.innerHTML = "Temperature<br>Difference: " + temparature + " (F)";
+    element.innerHTML = "Temperature Difference: " + temparature + " (F)";
     ul.appendChild(element)
     var element = document.createElement("li");
-    element.innerHTML = "Thremal<br>Coefficient: " + thermal_coefficient + "<a href='Hi'> (1/F)</a>";
+    element.innerHTML = "Thremal Coefficient: " + thermal_coefficient + "<a href='Hi'> (1/F)</a>";
     ul.appendChild(element)
 }
 GameLoop();

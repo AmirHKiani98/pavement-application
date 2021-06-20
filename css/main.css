@@ -3,11 +3,39 @@
     src: url("../fonts/Roboto/Roboto-Black.ttf");
 }
 
+@font-face {
+    font-family: "benne";
+    src: url("../fonts/Benne/Benne-Regular.ttf");
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto";
+    font-family: "benne";
+    font-weight: bolder;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.change_mouse {
+    transition-duration: 0.4s;
+}
+
+.change_mouse:hover {
+    cursor: pointer;
+    color: wheat;
 }
 
 a {
@@ -55,12 +83,13 @@ nav>ul>a:hover,
 #exit:hover {
     color: wheat;
     transform: translate(0, -6px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.5);
     background-color: rgb(37, 37, 37);
 }
 
-nav>ul>a:active,
-#exit:active {}
+
+/* nav>ul>a:active,
+#exit:active {} */
 
 #exit {
     background-color: rgb(255, 131, 129);
@@ -103,6 +132,7 @@ footer {
     display: flex;
     /* padding: 10px; */
     flex-direction: column;
+    margin-top: 5px;
     /* justify-content: center; */
     /* text-align: center; */
 }
@@ -142,7 +172,7 @@ footer {
 }
 
 #about>div {
-    margin: 4em 0;
+    margin: 2em 0;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -245,4 +275,14 @@ footer {
 #show_result {
     text-align: center;
     color: wheat;
+}
+
+#about_developer {
+    display: flex;
+    justify-content: center;
+}
+
+#my_pic {
+    border-radius: 100%;
+    margin: auto;
 }

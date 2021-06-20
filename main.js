@@ -28,6 +28,10 @@ var propertiesWindow = null;
 ipcMain.on("open-properties-window", () => {
     propertiesWindow = openChildWindow("pages/properties_page.html", win);
 });
+
+ipcMain.on("open-load-window", () => {
+    loadPropertiesWindow = openChildWindow("pages/loads_properties.html", win);
+});
 app.whenReady().then(() => {
     win = createWindow()
 
@@ -47,6 +51,10 @@ app.on('window-all-closed', () => {
 ipcMain.on("ok-properties", (event, data) => {
     win.webContents.send("update-attributes", data);
     propertiesWindow.close();
+})
+ipcMain.on("ok-load-properties", (event, data) => {
+    win.webContents.send("update-load-attributes", data);
+    loadPropertiesWindow.close();
 })
 
 function openChildWindow(pageAddress, parent) {

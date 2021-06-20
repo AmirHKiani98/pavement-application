@@ -72,6 +72,9 @@ function checkInput(event) {
         case "Maximum Edge Curling":
             methodHandler.maxEdgeCurling();
             break;
+        case "Westergard corner stress":
+            methodHandler.westergardCornerStress();
+            break;
         default:
             break;
     }

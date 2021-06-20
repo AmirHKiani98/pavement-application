@@ -6,6 +6,11 @@ closeApp.addEventListener('click', () => {
 });
 
 const propertiesButton = document.getElementById("properties_button");
+const loadPropertiesButton = document.getElementById("load_properties_button");
+loadPropertiesButton.addEventListener("click", () => {
+    ipcRenderer.send("open-load-window");
+});
+
 
 propertiesButton.addEventListener("click", () => {
     ipcRenderer.send("open-properties-window");
@@ -30,4 +35,7 @@ ipcRenderer.on("update-attributes", (event, args) => {
 
     };
     window.makeAsphalt(properties);
-})
+});
+ipcRenderer.on("update-load-attributes", (event, args) => {
+    window.updateLoadProperties(args);
+});

@@ -1,7 +1,13 @@
+@font-face {
+    font-family: "benne";
+    src: url("../fonts/Benne/Benne-Regular.ttf");
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: "benne";
 }
 
 html {
@@ -25,6 +31,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 

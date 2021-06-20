@@ -24,14 +24,18 @@
             <ul id="main_list_container">
 
                 <li class="right_side_list">
-                    <p class="dropdown" id="properties_button">Change Attributes</p>
+                    <p class="dropdown change_mouse" id="properties_button">Change Attributes</p>
+                </li>
+                <li class="right_side_list">
+                    <p class="dropdown change_mouse" id="load_properties_button">Change Load Attributes</p>
                 </li>
 
                 <li class="right_side_list">
-                    <p data-id="1" class="dropdown">Stresses</p>
+                    <p data-id="1" class="dropdown change_mouse">Stresses</p>
                     <ul class="drop_down_list" data-id="1">
-                        <li>Maximum Interior Curling</li>
-                        <li>Maximum Edge Curling</li>
+                        <li class="change_mouse">Maximum Interior Curling</li>
+                        <li class="change_mouse">Maximum Edge Curling</li>
+                        <li class="change_mouse">Westergard corner stress</li>
                     </ul>
                 </li>
 
@@ -45,9 +49,9 @@
         <div id="left_side">
             <div id="functions">
                 <ul>
-                    <li id="normal_mode">Normal View</li>
-                    <li id="transparent_mode">Rebar View</li>
-                    <li id="check_stresses">Upside View</li>
+                    <li id="normal_mode" class="change_mouse">Normal View</li>
+                    <li id="transparent_mode" class="change_mouse">Rebar View</li>
+                    <li id="check_stresses" class="change_mouse">Upside View</li>
                 </ul>
             </div>
             <div id="attributes">
